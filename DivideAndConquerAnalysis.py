@@ -53,3 +53,35 @@ def analyze_algorithm(algorithm, data):
     execution_time = time.time() - start_time
     memory_used = end_memory - start_memory
     return execution_time, memory_used
+
+def main():
+    # Generate test datasets
+    sizes = [1000, 5000, 10000]  # Different dataset sizes
+    data_types = {
+        "Random": lambda size: [random.randint(0, 10000) for _ in range(size)],
+        "Sorted": lambda size: list(range(size)),
+        "Reverse Sorted": lambda size: list(range(size, 0, -1)),
+    }
+
+    print("Algorithm Performance Analysis\n")
+    for size in sizes:
+        print(f"Dataset size: {size}")
+        for data_type, data_gen in data_types.items():
+            data = data_gen(size)
+            print(f"\nData Type: {data_type}")
+
+            # Analyze Quick Sort
+            quick_time, quick_memory = analyze_algorithm(quick_sort, data)
+            print(f"Quick Sort - Time: {quick_time:.6f}s, Memory: {quick_memory:.6f} MiB")
+
+            # Analyze Merge Sort
+            merge_time, merge_memory = analyze_algorithm(merge_sort, data)
+            print(f"Merge Sort - Time: {merge_time:.6f}s, Memory: {merge_memory:.6f} MiB")
+
+        print("-" * 40)
+
+
+if __name__ == "__main__":
+    # Set recursion limit for large datasets in Python
+    sys.setrecursionlimit(2000)
+    main()
